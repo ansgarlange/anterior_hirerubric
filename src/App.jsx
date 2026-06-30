@@ -5,6 +5,7 @@ import CandidatesView from "./components/CandidatesView";
 import SettingsView from "./components/SettingsView";
 import { uid } from "./lib/utils";
 import { loadState, saveConfig, insertCandidate, upsertCandidate, removeCandidate } from "./lib/db";
+import { supabase } from "./lib/supabase";
 
 const ENG = {
   id: "eng",
@@ -81,6 +82,7 @@ export default function App() {
   const [activeId, setActiveId] = useState(ENG.id);
   const [view, setView] = useState("score");
   const [loaded, setLoaded] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
   // Debounced writes for rapid score/note changes
   const pendingRef = useRef({});
@@ -100,6 +102,9 @@ export default function App() {
 
   // Load from Supabase on mount
   useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setCurrentUser(session?.user?.email ?? null);
+    });
     loadState().then(({ functions: fns, candidates: cands }) => {
       if (fns && fns.length) {
         setFunctions(fns);
@@ -151,6 +156,7 @@ export default function App() {
     fn.dimensions.forEach((d) => { scores[d.id] = null; notes[d.id] = ""; });
     const candidate = {
       id: newId, name, functionId: fn.id, visible: true, scores, notes,
+      createdBy: currentUser,
       createdAt: new Date().toISOString(),
     };
     insertCandidate(candidate);

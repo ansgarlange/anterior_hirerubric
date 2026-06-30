@@ -21,6 +21,7 @@ function fromRow(row) {
     visible: row.visible,
     scores: row.scores ?? {},
     notes: row.notes ?? {},
+    createdBy: row.created_by ?? null,
     createdAt: row.created_at,
   };
 }

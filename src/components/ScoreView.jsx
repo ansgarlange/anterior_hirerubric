@@ -253,12 +253,19 @@ export default function ScoreView({
                       >
                         <div className="flex w-full items-center gap-2">
                           <span className="h-[9px] w-[9px] shrink-0 rounded-full" style={{ background: color(candIdx) }} />
-                          <span
-                            className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-[12.5px] font-semibold"
-                            style={{ color: "#0c1512" }}
-                          >
-                            {m.name}
-                          </span>
+                          <div className="flex min-w-0 flex-1 flex-col">
+                            <span
+                              className="overflow-hidden text-ellipsis whitespace-nowrap text-[12.5px] font-semibold"
+                              style={{ color: "#0c1512" }}
+                            >
+                              {m.name}
+                            </span>
+                            {m.createdBy && (
+                              <span className="text-[10.5px] text-zinc-400">
+                                {m.createdBy.split('@')[0]}
+                              </span>
+                            )}
+                          </div>
                           <span
                             className="shrink-0 rounded-[6px] px-[7px] py-[2px] text-[11px] font-semibold"
                             style={

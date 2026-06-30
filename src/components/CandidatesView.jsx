@@ -68,6 +68,7 @@ export default function CandidatesView({ candidates, functions, deleteCandidate 
                 <th className="px-4 py-3 text-left">Function</th>
                 <th className="px-4 py-3 text-left">Suggested level</th>
                 <th className="px-4 py-3 text-left">Dimensions scored</th>
+                <th className="px-4 py-3 text-left">Added by</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -101,6 +102,9 @@ export default function CandidatesView({ candidates, functions, deleteCandidate 
                     </td>
                     <td className="px-4 py-3 text-zinc-500">
                       {s ? `${s.scored} / ${fn?.dimensions.length || 0}` : "—"}
+                    </td>
+                    <td className="px-4 py-3 text-zinc-400">
+                      {c.createdBy ? c.createdBy.split('@')[0] : '—'}
                     </td>
                     <td className="px-4 py-3 text-right">
                       <button
